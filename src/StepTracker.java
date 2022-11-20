@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class StepTracker {
     Scanner scanner = new Scanner(System.in);
     int targetNumberSteps = 10000;
-
     MonthData[] monthToData;
     public StepTracker() {
         monthToData = new MonthData[12];
@@ -16,7 +15,6 @@ public class StepTracker {
 
          // Заполните класс самостоятельно
     }
-
     int recordGoal() { //Задание новой цели по шагам в день. Возвращающий метод
         System.out.println ("Какое количество шагов в день вы хотите задать в качестве цели?");
         int targetNumberSteps  = scanner.nextInt();

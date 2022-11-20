@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Main {
     Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
@@ -47,7 +46,6 @@ public class Main {
         System.out.println ("3 - Изменить цель по количеству шагов в день");
         System.out.println ("0 - Выход");
     }
-
     public static int printStatistic() { // Учесть, что номер месяца на 1 больше индекса
         Scanner scanner = new Scanner(System.in);
         System.out.println ("Введите номер месяца, за который вы хотите получить статистику -");
