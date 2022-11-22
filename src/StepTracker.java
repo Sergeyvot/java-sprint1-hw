@@ -2,7 +2,9 @@ import java.util.Scanner;
 
 public class StepTracker {
     Scanner scanner = new Scanner(System.in);
+    Main input = new Main();
     int targetNumberSteps = 10000;
+    int inputTargetSteps = input.newTargetNumberSteps;  // Сохраняем введенную в Main новую цель
     MonthData[] monthToData;
     public StepTracker() {
         monthToData = new MonthData[12];
@@ -10,39 +12,37 @@ public class StepTracker {
             monthToData[i] = new MonthData();
         }
     }
-    class MonthData {
+    static class MonthData {
         int[] stepsDay = new int[30]; // Массив со значениями шагов по дням
 
          // Заполните класс самостоятельно
     }
-    int recordGoal() { //Задание новой цели по шагам в день. Возвращающий метод
-        System.out.println ("Какое количество шагов в день вы хотите задать в качестве цели?");
-        int targetNumberSteps  = scanner.nextInt();
-        if (targetNumberSteps < 0) {
-            System.out.println ("Целевое количество шагов не может быть отрицательным");
+    int recordGoal( int targetNumberSteps) { //Задание новой цели по шагам в день. Возвращающий метод
+        System.out.println ("Текущее значение " + targetNumberSteps + " шагов. Введите новую цель" );
+        int newTargetNumberSteps  = scanner.nextInt();
+        while (newTargetNumberSteps < 0) {
+            System.out.println ("Целевое количество шагов не может быть отрицательным. Попробуйте еще раз");
+            newTargetNumberSteps  = scanner.nextInt();
         }
-        return targetNumberSteps;
+        return newTargetNumberSteps;
     }
-    void printStatMonth (int i) { //Метод печатающий статистику шагов по дням
-        StepTracker results = new StepTracker();
-        for (int j = 0; j < monthToData[i].stepsDay.length; j++) {
-            System.out.print(j + " день: " + monthToData[i].stepsDay[j] + ", ");
+    void printStatMonth (int inputMonth) { //Метод печатающий статистику шагов по дням
+        for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
+            System.out.print(j + " день: " + monthToData[inputMonth].stepsDay[j] + ", ");
         }
     }
-    int findSumSteps(int i) { // Возвращающий метод - сумма шагов за месяц
+    int findSumSteps(int inputMonth) { // Возвращающий метод - сумма шагов за месяц
         int sumSteps = 0;
-        StepTracker results = new StepTracker();
-        for (int j = 0; j < monthToData[i].stepsDay.length; j++) {
-            sumSteps = sumSteps + monthToData[i].stepsDay[j];
+        for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
+            sumSteps = sumSteps + monthToData[inputMonth].stepsDay[j];
         }
         return sumSteps;
     }
-    int findMaxSteps(int i) { // Метод возвращает максимальное количество шагов в месяце
+    int findMaxSteps(int inputMonth) { // Метод возвращает максимальное количество шагов в месяце
         int maxSteps = 0;
-        StepTracker results = new StepTracker();
-        for (int j = 0; j < monthToData[i].stepsDay.length; j++) {
-            if (maxSteps < monthToData[i].stepsDay[j]) {
-                maxSteps = monthToData[i].stepsDay[j];
+        for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
+            if (maxSteps < monthToData[inputMonth].stepsDay[j]) {
+                maxSteps = monthToData[inputMonth].stepsDay[j];
             }
         }
         return maxSteps;
@@ -50,8 +50,16 @@ public class StepTracker {
     void enterSteps() { // Метод ввода количества пройденных шагов
         System.out.println ("Введите номер месяца, по которому сохраняете данные. Номера месяцев начинаются с 0");
         int numberMonth = scanner.nextInt();
-        System.out.println ("Введите номер дня, за который сохраняете данные");
+        while ((numberMonth < 0) || (numberMonth > 11)) { // Проверяем на корректность
+            System.out.println("Введите корректное значение месяца от 0 до 11");
+            numberMonth = scanner.nextInt();
+        }
+        System.out.println ("Введите номер дня, за который сохраняете данные. Номера дней начинаются с 0");
         int numberDay = scanner.nextInt();
+        while ((numberDay < 0) || (numberDay > 29)) { // Проверяем на корректность
+            System.out.println("Введите корректное значение дня от 0 до 29");
+            numberDay = scanner.nextInt();
+        }
         System.out.println ("Введите количеество пройденных шагов");
         int numberSteps = scanner.nextInt();
         while (numberSteps < 0) {
@@ -59,16 +67,20 @@ public class StepTracker {
             System.out.println ("Введите количеество пройденных шагов");
             numberSteps = scanner.nextInt();
         }
-        StepTracker results = new StepTracker();
         monthToData[numberMonth].stepsDay[numberDay] = numberSteps;
         System.out.println ("Данные сохранены");
     }
-    int findBestSeries (int i) { // Метод возвращает значение лучшей серии
-        StepTracker results = new StepTracker();
+    int findBestSeries (int inputMonth) { // Метод возвращает значение лучшей серии
         int bestSeries = 0;
         int series = 0;
-        for (int j = 0; j < monthToData[i].stepsDay.length; j++) {
-            if (monthToData[i].stepsDay[j] >= targetNumberSteps) {
+        int basicPurposeOfSteps;
+        if ((inputTargetSteps == 0) || (inputTargetSteps == targetNumberSteps)) {
+            basicPurposeOfSteps = targetNumberSteps;
+        } else {
+            basicPurposeOfSteps = inputTargetSteps;
+        }
+        for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
+            if (monthToData[inputMonth].stepsDay[j] >= basicPurposeOfSteps) {
                 series = series + 1;
                 if (bestSeries < series) {
                     bestSeries = series;
