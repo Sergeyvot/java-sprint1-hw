@@ -2,9 +2,8 @@ import java.util.Scanner;
 
 public class StepTracker {
     Scanner scanner = new Scanner(System.in);
-    Main input = new Main();
     int targetNumberSteps = 10000;
-    int inputTargetSteps = input.newTargetNumberSteps;  // Сохраняем введенную в Main новую цель
+
     MonthData[] monthToData;
     public StepTracker() {
         monthToData = new MonthData[12];
@@ -12,13 +11,11 @@ public class StepTracker {
             monthToData[i] = new MonthData();
         }
     }
-    static class MonthData {
+    class MonthData {
         int[] stepsDay = new int[30]; // Массив со значениями шагов по дням
-
-         // Заполните класс самостоятельно
     }
-    int recordGoal( int targetNumberSteps) { //Задание новой цели по шагам в день. Возвращающий метод
-        System.out.println ("Текущее значение " + targetNumberSteps + " шагов. Введите новую цель" );
+    int recordGoal() { //Задание новой цели по шагам в день. Возвращающий метод
+        System.out.println ("Текущее значение " + targetNumberSteps + " шагов в день. Введите новую цель");
         int newTargetNumberSteps  = scanner.nextInt();
         while (newTargetNumberSteps < 0) {
             System.out.println ("Целевое количество шагов не может быть отрицательным. Попробуйте еще раз");
@@ -28,7 +25,7 @@ public class StepTracker {
     }
     void printStatMonth (int inputMonth) { //Метод печатающий статистику шагов по дням
         for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
-            System.out.print(j + " день: " + monthToData[inputMonth].stepsDay[j] + ", ");
+            System.out.print((j+1) + " день: " + monthToData[inputMonth].stepsDay[j] + ", ");
         }
     }
     int findSumSteps(int inputMonth) { // Возвращающий метод - сумма шагов за месяц
@@ -70,17 +67,14 @@ public class StepTracker {
         monthToData[numberMonth].stepsDay[numberDay] = numberSteps;
         System.out.println ("Данные сохранены");
     }
+
+
     int findBestSeries (int inputMonth) { // Метод возвращает значение лучшей серии
         int bestSeries = 0;
         int series = 0;
-        int basicPurposeOfSteps;
-        if ((inputTargetSteps == 0) || (inputTargetSteps == targetNumberSteps)) {
-            basicPurposeOfSteps = targetNumberSteps;
-        } else {
-            basicPurposeOfSteps = inputTargetSteps;
-        }
+
         for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
-            if (monthToData[inputMonth].stepsDay[j] >= basicPurposeOfSteps) {
+            if (monthToData[inputMonth].stepsDay[j] >= targetNumberSteps) {
                 series = series + 1;
                 if (bestSeries < series) {
                     bestSeries = series;
