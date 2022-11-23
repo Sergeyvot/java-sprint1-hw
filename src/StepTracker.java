@@ -12,14 +12,14 @@ public class StepTracker {
     class MonthData {
         int[] stepsDay = new int[30]; // Массив со значениями шагов по дням
     }
-    void recordGoal(StepTracker results,int basicTarget) { //Задание новой цели по шагам в день. Возвращающий метод
-        System.out.println ("Текущее значение " + basicTarget + " шагов в день. Введите новую цель");
+    void recordGoal() { //Задание новой цели по шагам в день
+        System.out.println ("Текущее значение " + targetNumberSteps + " шагов в день. Введите новую цель");
         int newTargetNumberSteps  = scanner.nextInt();
         while (newTargetNumberSteps < 0) {
             System.out.println ("Целевое количество шагов не может быть отрицательным. Попробуйте еще раз");
             newTargetNumberSteps  = scanner.nextInt();
         }
-        results.targetNumberSteps = newTargetNumberSteps;
+        targetNumberSteps = newTargetNumberSteps;
     }
     void printStatMonth (int inputMonth) { //Метод печатающий статистику шагов по дням
         for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {

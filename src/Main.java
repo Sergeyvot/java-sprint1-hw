@@ -4,7 +4,7 @@ public class Main {
         System.out.println("Пришло время практики!");
         Scanner scanner = new Scanner(System.in);
         StepTracker results = new StepTracker();
-        Converter convert = new Converter();
+
         printMenu();
         int userInput = scanner.nextInt();
 
@@ -12,9 +12,9 @@ public class Main {
             if (userInput == 1) {
                 results.enterSteps();
             } else if (userInput == 2) {
-                printStatisticOfMonth (results, scanner,convert); // Переменные классов передаются параметрами
+                printStatisticOfMonth (results, scanner); // Переменные классов передаются параметрами
             } else if (userInput == 3) {
-                results.recordGoal(results,results.targetNumberSteps);
+                results.recordGoal();
                 // При вызове метода обновляется значение поля класса StepTracker
             } else {
                 System.out.println ("Такой команды не существует. Выберите еще раз.");
@@ -31,7 +31,8 @@ public class Main {
         System.out.println ("3 - Изменить цель по количеству шагов в день");
         System.out.println ("0 - Выход");
     }
-    public static void printStatisticOfMonth(StepTracker results, Scanner scanner,Converter convert) {
+    public static void printStatisticOfMonth(StepTracker results, Scanner scanner) {
+        Converter convert = new Converter();
         System.out.println ("Введите номер месяца, за который вы хотите получить статистику -");
         int statMonth = scanner.nextInt();
         while ((statMonth < 0) || (statMonth > 11)) { // Проверяем на корректность
