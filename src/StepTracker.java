@@ -1,9 +1,7 @@
 import java.util.Scanner;
-
 public class StepTracker {
     Scanner scanner = new Scanner(System.in);
     int targetNumberSteps = 10000;
-
     MonthData[] monthToData;
     public StepTracker() {
         monthToData = new MonthData[12];
@@ -14,14 +12,14 @@ public class StepTracker {
     class MonthData {
         int[] stepsDay = new int[30]; // Массив со значениями шагов по дням
     }
-    int recordGoal() { //Задание новой цели по шагам в день. Возвращающий метод
-        System.out.println ("Текущее значение " + targetNumberSteps + " шагов в день. Введите новую цель");
+    void recordGoal(StepTracker results,int basicTarget) { //Задание новой цели по шагам в день. Возвращающий метод
+        System.out.println ("Текущее значение " + basicTarget + " шагов в день. Введите новую цель");
         int newTargetNumberSteps  = scanner.nextInt();
         while (newTargetNumberSteps < 0) {
             System.out.println ("Целевое количество шагов не может быть отрицательным. Попробуйте еще раз");
             newTargetNumberSteps  = scanner.nextInt();
         }
-        return newTargetNumberSteps;
+        results.targetNumberSteps = newTargetNumberSteps;
     }
     void printStatMonth (int inputMonth) { //Метод печатающий статистику шагов по дням
         for (int j = 0; j < monthToData[inputMonth].stepsDay.length; j++) {
@@ -67,8 +65,6 @@ public class StepTracker {
         monthToData[numberMonth].stepsDay[numberDay] = numberSteps;
         System.out.println ("Данные сохранены");
     }
-
-
     int findBestSeries (int inputMonth) { // Метод возвращает значение лучшей серии
         int bestSeries = 0;
         int series = 0;
